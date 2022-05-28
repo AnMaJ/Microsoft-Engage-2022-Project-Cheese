@@ -198,7 +198,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           'email': email,
                           'uid' : uid,
                           'Location': location,
-                          'password': password,
                           'phone number': phone_no
                         }).then((value) {
                           //if all done well, taking the user to home page

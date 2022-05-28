@@ -55,15 +55,12 @@ class _settingsState extends State<settings> {
     return
       Scaffold(
           appBar: AppBar(
-            title: Center(child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
+            title: Center(
+                child: Text(
                   'Update  profile',
                   style: GoogleFonts.readexPro(fontSize: 30)
                   ),
-              ],
-            )
+
             ),
             backgroundColor: Color_palate().app_bar,
             toolbarHeight: 70.0,
