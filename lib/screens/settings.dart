@@ -10,11 +10,10 @@ import 'login_page.dart';
 
 
 class settings extends StatefulWidget {
-  settings({Key? key,required this.email,required this.password,required this.name}) : super(key: key);
+  settings({Key? key,required this.email,required this.name}) : super(key: key);
   //attributes fetched from previous page
   String email='';
   String? name='';
-  String? password='';
   @override
   _settingsState createState() => _settingsState();
 }
@@ -22,8 +21,6 @@ class settings extends StatefulWidget {
 class _settingsState extends State<settings> {
 
   //user data fields
-  String currentPassword='';
-  String newPassword='';
   String email='';
   String? name='';
   String phone_number='';
@@ -76,7 +73,7 @@ class _settingsState extends State<settings> {
                       width:370,
                       child: TextFormField(
                         onChanged: (val){
-                          name = val;
+                          phone_number = val;
                         },
                         initialValue: phone_number,
                         cursorColor: Color_palate().text,
@@ -107,12 +104,13 @@ class _settingsState extends State<settings> {
                         onPressed: () async{
                           resetPassword(widget.email as String);
                           updatePhoneNumber();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) =>
-                                  Home(name:name!,email: widget.email)
-                              )
-                          );
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(
+                              content: Text('Phone Number Updated'),
+                              behavior: SnackBarBehavior.floating,
+                              margin: EdgeInsets.fromLTRB(35.0, 0, 35.0, 10.0),
+                              backgroundColor: Color_palate().button
+                          ));
                         },
                         style: ElevatedButton.styleFrom(shape:  RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),

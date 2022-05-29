@@ -206,7 +206,6 @@ class _HomeState extends State<Home> {
                           MaterialPageRoute(builder: (context) =>
                               settings(
                                   email:widget.email as String,
-                                  password: ds.get('password'),
                                   name: widget.name)
                           )
                       );

@@ -35,6 +35,7 @@ class _ReportState extends State<Report> {
   String? userid=Random.secure().nextInt(100000000).toString();
   var img=Image.asset('assets/images/missing_child.png');
   var img1;
+  String? imageUrl;
 
   //initializations
   CollectionReference lost_child = FirebaseFirestore.instance.collection('lost_child_data');
@@ -51,9 +52,9 @@ class _ReportState extends State<Report> {
   Future<void> uploadFile() async{
     final path= 'files/${userid}';
     if(img1==null){
-      print('null hai bahi');
+      return;
     }
-    final file=io.File(img1!.path);
+    final file=io.File(img1.path);
     final ref= FirebaseStorage.instance.ref().child(path);
     uploadTask=ref.putFile(file);
 
@@ -61,6 +62,8 @@ class _ReportState extends State<Report> {
     final snapshot=await uploadTask!.whenComplete(() {});
     final urlDownload=await snapshot.ref.getDownloadURL();
     image_url=urlDownload;
+    imageUrl=image_url;
+    showSnackbar('Image uploaded successfully');
   }
 
 
@@ -135,7 +138,7 @@ class _ReportState extends State<Report> {
                         PickedFile image = (await ImagePicker()
                             .getImage(source: ImageSource.gallery)) as PickedFile;
                         setImage(
-                          io.File(image!.path).readAsBytesSync(),
+                          io.File(image.path).readAsBytesSync(),
                         );
                         img1=image;
                         //Uploading the image to firestore here itself(it takes time to get uploaded, so, while the police is filling other info, the images gets uploaded
@@ -333,8 +336,11 @@ class _ReportState extends State<Report> {
                     height: 50.0,
                     child: ElevatedButton(
                       onPressed: () {
+                        if(imageUrl!=null){
                         context1 = context;
-                        addDataToFirestore();
+                        addDataToFirestore();}else{
+                          showSnackbar('Please wait until we are uploading image');
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -346,7 +352,7 @@ class _ReportState extends State<Report> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
                         child: Text(
-                            'Upload File',
+                            'Report',
                             style: GoogleFonts.readexPro(fontSize: 25)
                         ),
                       ),

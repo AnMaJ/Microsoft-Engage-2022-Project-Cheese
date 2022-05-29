@@ -225,8 +225,8 @@ class _ScanState extends State<Scan> {
           image2.bitmap == null ||
           image2.bitmap == "") return null;
 
-
-      setState(() => {_similarity = "Processing...",matched_id='',_name='Searching...'});
+      if(_similarity!='Found!'){
+      setState(() => {_similarity = "Processing...",matched_id=''});}
 
       //matching the images
       var request = new Regula.MatchFacesRequest();
@@ -368,9 +368,6 @@ class _ScanState extends State<Scan> {
 
                     //matching the input image with the images in database
                     await matchFaces();
-                    if(matched_id!=null){
-                      await getLostChildData();
-                    }
                   },
                   style: ElevatedButton.styleFrom(
                       shape:  RoundedRectangleBorder(
